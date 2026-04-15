@@ -1,0 +1,31 @@
+﻿<Window x:Class="NivelUIWPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Clienti Magazin" Height="450" Width="800">
+
+    <Grid Margin="20">
+        <StackPanel Orientation="Vertical" Width="250">
+
+            <Label Content="Username"/>
+            <TextBox x:Name="txtUsername" MaxLength="15"/>
+
+            <Label Content="Email"/>
+            <TextBox x:Name="txtEmail"/>
+
+            <Label Content="Parola"/>
+            <TextBox x:Name="txtParola"/>
+
+            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                <Button x:Name="btnAdauga" Content="Adauga" Width="100" Click="btnAdauga_Click"/>
+                <Button x:Name="btnReset" Content="Reset" Width="100" Margin="10,0,0,0" Click="btnReset_Click"/>
+            </StackPanel>
+
+            <Label x:Name="lblNrClienti" Margin="0,20,0,0"/>
+            <Label x:Name="lblClienti"/>
+
+        </StackPanel>
+    </Grid>
+</Window>
