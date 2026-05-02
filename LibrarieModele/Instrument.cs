@@ -2,7 +2,7 @@
 
 namespace LibrarieModele
 {
-    // Am scos enumerarile in afara clasei pentru a fi folosite mai usor
+
     [Flags]
     public enum Instrument_Category
     {
@@ -19,6 +19,18 @@ namespace LibrarieModele
 
     public class Instrument
     {
+        private const char SEPARATOR_PRINCIPAL_FISIER = ';';
+
+        private const int ID_INDEX = 0;
+        private const int NAME_INDEX = 1;
+        private const int BRAND_INDEX = 2;
+        private const int CATEGORY_INDEX = 3;
+        private const int PRICE_INDEX = 4;
+        private const int DESCRIPTION_INDEX = 5;
+        private const int QUANTITY_INDEX = 6;
+        private const int DISCOUNT_INDEX = 7;
+        private const int COLOR_INDEX = 8;
+
         public int ID { get; set; }
         public string Name { get; set; }
         public string Brand { get; set; }
@@ -31,7 +43,7 @@ namespace LibrarieModele
 
         public double Final_Price()
         {
-            // Formula corectata pentru aplicarea discount-ului procentual
+  
             return Price - (Price * (Discount / 100));
         }
 
@@ -40,21 +52,57 @@ namespace LibrarieModele
             ID = 0;
             Name = string.Empty;
             Brand = string.Empty;
+            Category = Instrument_Category.Guitars;
             Price = 0;
             Description = string.Empty;
             Quantity = 0;
             Discount = 0;
-            Category = Instrument_Category.Guitars; // Valoare default
+            Color = CustomOrderColor.Black;
         }
 
-        public Instrument(string name, string brand, double price, int id, double discount, int quantity)
+        public Instrument(int id, string name, string brand, Instrument_Category category,
+                        double price, string description, int quantity,
+                        double discount, CustomOrderColor color)
         {
             ID = id;
             Name = name;
             Brand = brand;
+            Category = category;
             Price = price;
-            Discount = discount;
+            Description = description;
             Quantity = quantity;
+            Discount = discount;
+            Color = color;
+        }
+        public Instrument(string linieFisier)
+        {
+            string[] date = linieFisier.Split(SEPARATOR_PRINCIPAL_FISIER);
+
+            ID = int.Parse(date[ID_INDEX]);
+            Name = date[NAME_INDEX];
+            Brand = date[BRAND_INDEX];
+            Category = (Instrument_Category)int.Parse(date[CATEGORY_INDEX]);
+            Price = double.Parse(date[PRICE_INDEX]);
+            Description = date[DESCRIPTION_INDEX];
+            Quantity = int.Parse(date[QUANTITY_INDEX]);
+            Discount = double.Parse(date[DISCOUNT_INDEX]);
+            Color = (CustomOrderColor)int.Parse(date[COLOR_INDEX]);
+        }
+
+        // salvare in fisier
+        public string ConversieLaSirPentruFisier()
+        {
+            return string.Format("{1}{0}{2}{0}{3}{0}{4}{0}{5}{0}{6}{0}{7}{0}{8}{0}{9}",
+                SEPARATOR_PRINCIPAL_FISIER,
+                ID,
+                Name ?? "NECUNOSCUT",
+                Brand ?? "NECUNOSCUT",
+                (int)Category,
+                Price,
+                Description ?? "",
+                Quantity,
+                Discount,
+                (int)Color);
         }
 
         public string Info()

@@ -10,8 +10,9 @@ namespace LibrarieModele
         private const int NAME_INDEX = 1;
         private const int EMAIL_INDEX = 2;
         private const int PASSWORD_INDEX = 3;
+        private const int INSTRUMENT_INDEX = 4;
 
-        // Am transformat parola in proprietate auto-implementata curata
+      
         public int ID { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
@@ -33,7 +34,6 @@ namespace LibrarieModele
             Password = password;
         }
 
-        // Constructor pentru fisier
         public Client(string linieFisier)
         {
             string[] date = linieFisier.Split(SEPARATOR_PRINCIPAL_FISIER);

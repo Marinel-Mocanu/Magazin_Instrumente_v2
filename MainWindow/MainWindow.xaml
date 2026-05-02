@@ -1,31 +1,138 @@
 ﻿<Window x:Class="NivelUIWPF.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d"
-        Title="Clienti Magazin" Height="450" Width="800">
+        Title="Magazin Instrumente" Height="500" Width="900">
 
-    <Grid Margin="20">
-        <StackPanel Orientation="Vertical" Width="250">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
 
-            <Label Content="Username"/>
-            <TextBox x:Name="txtUsername" MaxLength="15"/>
+        <!-- meniu -->
+            <StackPanel Orientation="Horizontal" Background="LightGray">
+            <Button Content="Clienti" Click="BtnClienti_Click" Width="100"/>
+            <Button Content="Instrumente" Click="BtnInstrumente_Click" Width="100"/>
+            <Button Content="Login" Click="BtnLogin_Click" Width="100"/>
+            <TextBox x:Name="txtCautareInstrument"
+                     Width="150"
+                     Margin="20,0,0,0"
+                     VerticalContentAlignment="Center"/>
 
-            <Label Content="Email"/>
-            <TextBox x:Name="txtEmail"/>
-
-            <Label Content="Parola"/>
-            <TextBox x:Name="txtParola"/>
-
-            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                <Button x:Name="btnAdauga" Content="Adauga" Width="100" Click="btnAdauga_Click"/>
-                <Button x:Name="btnReset" Content="Reset" Width="100" Margin="10,0,0,0" Click="btnReset_Click"/>
-            </StackPanel>
-
-            <Label x:Name="lblNrClienti" Margin="0,20,0,0"/>
-            <Label x:Name="lblClienti"/>
-
+            <Button Content="Cauta"
+                    Width="80"
+                    Margin="5,0,0,0"
+                    Click="BtnCautaInstrument_Click"/>
         </StackPanel>
+
+        <!--continut -->
+        <Grid Grid.Row="1">
+
+            <!-- clienti -->
+            <Grid x:Name="GridClienti" Visibility="Visible">
+                <StackPanel Margin="20" Width="300">
+
+                    <Label Content="Username"/>
+                    <TextBox x:Name="txtUsername"/>
+
+                    <Label Content="Email"/>
+                    <TextBox x:Name="txtEmail"/>
+
+                    <Label Content="Parola"/>
+                    <TextBox x:Name="txtParola"/>
+
+                    <Button Content="Adauga Client" Click="btnAdauga_Click"/>
+
+                    <Label x:Name="lblNrClienti"/>
+                    <ListBox x:Name="listClienti"/>
+
+                </StackPanel>
+            </Grid>
+
+            <!-- instrumente -->
+            <Grid x:Name="GridInstrumente" Visibility="Hidden">
+                <StackPanel Margin="20" Width="300">
+
+                    <Label Content="Nume"/>
+                    <TextBox x:Name="txtNumeInstrument"/>
+
+                    <Label Content="Brand"/>
+                    <TextBox x:Name="txtBrand"/>
+
+                    <Label Content="Pret"/>
+                    <TextBox x:Name="txtPret"/>
+
+                    <Label Content="Categorie"/>
+                    <ComboBox x:Name="cmbCategorie"/>
+
+                    <Label Content="Culoare"/>
+
+                    <ScrollViewer Height="50">
+                        <WrapPanel>
+                            <RadioButton Content="Negru " x:Name="rbBlack"/>
+                            <RadioButton Content="Rosu " x:Name="rbRed"/>
+                            <RadioButton Content="Albastru " x:Name="rbBlue"/>
+                            <RadioButton Content="Verde " x:Name="rbGreen"/>
+                            <RadioButton Content="Alb " x:Name="rbWhite"/>
+                            <RadioButton Content="Mov " x:Name="rbPurple"/>
+                            <RadioButton Content="Portocaliu " x:Name="rbOrange"/>
+                        </WrapPanel>
+                    </ScrollViewer>
+
+
+                    <CheckBox x:Name="chkDiscount" Content="Aplică discount"/>
+
+                    <Button Content="Adauga Instrument" Click="BtnAdaugaInstrument_Click"/>
+
+                    <Button Content="Sterge Instrument" Margin="0,10,0,0" Click="BtnDeschideStergere_Click"/>
+
+
+                    <Grid x:Name="panelStergere" Visibility="Collapsed" Margin="20">
+                        <StackPanel Width="300">
+
+                            <Label Content="Selecteaza instrumentul de sters" FontWeight="Bold"/>
+
+                            <ListBox x:Name="listStergere"/>
+
+                            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                                <Button Content="Confirma stergere" Width="140" Click="BtnConfirmaStergere_Click"/>
+
+                                <Button Content="Anuleaza" Width="100" Margin="10,0,0,0" Click="BtnAnuleazaStergere_Click"/>
+                            </StackPanel>
+
+                        </StackPanel>
+                    </Grid>
+
+
+                    <ListBox x:Name="listInstrumente"
+                             SelectionChanged="ListInstrumente_SelectionChanged"/>
+
+                    <Label Content="Rezultate cautare:" Margin="0,10,0,0"/>
+                    <ListBox x:Name="listRezultate"
+                             SelectionChanged="ListRezultate_SelectionChanged"/>
+
+
+                </StackPanel>
+            </Grid>
+
+            <!-- login -->
+            <Grid x:Name="GridLogin" Visibility="Hidden">
+                <StackPanel Margin="20" Width="300">
+
+                    <Label Content="Username"/>
+                    <TextBox x:Name="txtLoginUser"/>
+
+                    <Label Content="Email"/>
+                    <TextBox x:Name="txtLoginEmail"/>
+
+                    <Button Content="Login" Click="BtnLoginUser_Click"/>
+
+                    <Label Content="Clienti logati:"/>
+                    <ListBox x:Name="listLogati"/>
+
+                </StackPanel>
+            </Grid>
+
+        </Grid>
     </Grid>
 </Window>

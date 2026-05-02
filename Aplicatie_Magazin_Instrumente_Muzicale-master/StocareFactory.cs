@@ -11,17 +11,17 @@ namespace Aplicatie_Magazin_Instrumente_Muzicale
 
         public static IStocareDate GetAdministratorStocare()
         {
-            // Citim din App.config
             string formatSalvare = ConfigurationManager.AppSettings[FORMAT_SALVARE] ?? "txt";
-            string numeFisier = ConfigurationManager.AppSettings[NUME_FISIER] ?? "Clienti";
+            string numeFisierClienti = ConfigurationManager.AppSettings[NUME_FISIER] ?? "clienti";
 
-            // Calculam calea ca sa apara fisierul langa proiect
             string locatieFisierSolutie = Directory.GetParent(Directory.GetCurrentDirectory())?.Parent?.Parent?.FullName ?? "";
-            string caleCompletaFisier = locatieFisierSolutie + "\\" + numeFisier;
+
+            string caleClienti = Path.Combine(locatieFisierSolutie, numeFisierClienti + "." + formatSalvare);
+            string caleInstrumente = Path.Combine(locatieFisierSolutie, "instrumente." + formatSalvare);
 
             if (formatSalvare == "txt")
             {
-                return new AdministrareDateText(caleCompletaFisier + "." + formatSalvare);
+                return new AdministrareDateText(caleClienti, caleInstrumente);
             }
             else if (formatSalvare == "memorie")
             {
@@ -30,5 +30,6 @@ namespace Aplicatie_Magazin_Instrumente_Muzicale
 
             return null;
         }
+
     }
 }
