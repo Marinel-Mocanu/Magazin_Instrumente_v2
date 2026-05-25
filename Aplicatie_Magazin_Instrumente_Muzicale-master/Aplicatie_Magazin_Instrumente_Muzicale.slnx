@@ -1,6 +1,8 @@
 <Solution>
+  <Folder Name="/Images/" />
   <Project Path="../AdministrareDate/AdministrareDate.csproj" Id="a2bd9be5-2963-4e99-997a-95fee0cb8b9b" />
   <Project Path="../LibrarieModele/LibrarieModele.csproj" Id="1be61da5-0de4-4c4f-aaa4-a667fbce4b9a" />
   <Project Path="../MainWindow/MainWindow.csproj" Id="091426ff-08b0-4bc3-abc7-e224e641139e" />
+  <Project Path="../Models/Models.csproj" Id="35777fbb-0c45-4af8-91cb-0ae5ce22cf14" />
   <Project Path="Aplicatie_Magazin_Instrumente_Muzicale.csproj" />
 </Solution>

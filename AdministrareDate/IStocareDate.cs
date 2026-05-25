@@ -10,7 +10,6 @@ namespace AdministrareDate
         Client CautaClientDupaNume(string nume); 
         bool StergeClientDupaNume(string nume);
         bool UpdateClient(Client clientActualizat);
-
         void AdaugaInstrument(Instrument i);
         List<Instrument> GetInstrumente();
         Instrument CautaInstrumentDupaNume(string nume);

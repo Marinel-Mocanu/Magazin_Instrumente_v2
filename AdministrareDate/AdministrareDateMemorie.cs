@@ -72,6 +72,7 @@ namespace AdministrareDate
             return instrumente.FirstOrDefault(i => i.Name.Equals(nume, StringComparison.OrdinalIgnoreCase));
         }
 
+
         public bool StergeInstrumentDupaNume(string nume)
         {
             int elementeSterse = instrumente.RemoveAll(i => i.Name.Equals(nume, StringComparison.OrdinalIgnoreCase));

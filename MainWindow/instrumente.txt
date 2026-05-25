@@ -1,1 +1,3 @@
 4;Saturn V;Mapex;2;12500;Fara descriere;1;0;32
+6;Chitara;Fender;1;2000;Fara descriere;1;0;2
+7;Saturn X;Mapex;2;120000;Fara descriere;1;0;4

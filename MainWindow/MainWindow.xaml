@@ -1,138 +1,474 @@
 ﻿<Window x:Class="NivelUIWPF.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Magazin Instrumente" Height="500" Width="900">
+        Title="Music Store"
+        Height="700"
+        Width="1200"
+        WindowStartupLocation="CenterScreen"
+        Background="#111111">
+
+    <Window.Resources>
+
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#ff00cc"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Height" Value="40"/>
+        </Style>
+
+        <Style TargetType="TextBox">
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Height" Value="30"/>
+        </Style>
+
+        <Style TargetType="Label">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+
+    </Window.Resources>
+
 
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
+        <!-- START -->
+        <Grid x:Name="GridStart">
 
-        <!-- meniu -->
-            <StackPanel Orientation="Horizontal" Background="LightGray">
-            <Button Content="Clienti" Click="BtnClienti_Click" Width="100"/>
-            <Button Content="Instrumente" Click="BtnInstrumente_Click" Width="100"/>
-            <Button Content="Login" Click="BtnLogin_Click" Width="100"/>
-            <TextBox x:Name="txtCautareInstrument"
-                     Width="150"
-                     Margin="20,0,0,0"
-                     VerticalContentAlignment="Center"/>
+            <StackPanel VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        Width="300">
 
-            <Button Content="Cauta"
-                    Width="80"
-                    Margin="5,0,0,0"
-                    Click="BtnCautaInstrument_Click"/>
-        </StackPanel>
+                <TextBlock Text="MUSIC STORE"
+                           FontSize="35"
+                           FontWeight="Bold"
+                           Foreground="#00ffff"
+                           HorizontalAlignment="Center"
+                           Margin="0,0,0,30"/>
 
-        <!--continut -->
-        <Grid Grid.Row="1">
+                <Button Content="MANAGER"
+                        Click="BtnManager_Click"
+                        Background="#ff00cc"/>
 
-            <!-- clienti -->
-            <Grid x:Name="GridClienti" Visibility="Visible">
-                <StackPanel Margin="20" Width="300">
+                <Button Content="CLIENT"
+                        Click="BtnClient_Click"
+                        Background="#00bfff"/>
 
-                    <Label Content="Username"/>
-                    <TextBox x:Name="txtUsername"/>
+                <Button Content="EXIT"
+                        Click="BtnExit_Click"
+                        Background="Red"/>
 
-                    <Label Content="Email"/>
-                    <TextBox x:Name="txtEmail"/>
+            </StackPanel>
 
-                    <Label Content="Parola"/>
-                    <TextBox x:Name="txtParola"/>
+        </Grid>
 
-                    <Button Content="Adauga Client" Click="btnAdauga_Click"/>
+        <!-- MANAGER -->
+        <Grid x:Name="GridManager"
+              Visibility="Collapsed">
 
-                    <Label x:Name="lblNrClienti"/>
-                    <ListBox x:Name="listClienti"/>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="220"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
-                </StackPanel>
-            </Grid>
+            <!-- MENIU -->
+            <StackPanel Background="#1a1a1a">
 
-            <!-- instrumente -->
-            <Grid x:Name="GridInstrumente" Visibility="Hidden">
-                <StackPanel Margin="20" Width="300">
+                <TextBlock Text="MANAGER PANEL"
+                           Foreground="#00ffff"
+                           FontSize="24"
+                           FontWeight="Bold"
+                           Margin="10"/>
 
-                    <Label Content="Nume"/>
-                    <TextBox x:Name="txtNumeInstrument"/>
+                <Button Content="Instrumente"
+                        Click="BtnMeniuInstrumente_Click"/>
 
-                    <Label Content="Brand"/>
-                    <TextBox x:Name="txtBrand"/>
+                <Button Content="Clienti"
+                        Click="BtnMeniuClienti_Click"/>
 
-                    <Label Content="Pret"/>
-                    <TextBox x:Name="txtPret"/>
+                <Button Content="Comenzi"
+                        Click="BtnMeniuComenzi_Click"/>
 
-                    <Label Content="Categorie"/>
-                    <ComboBox x:Name="cmbCategorie"/>
+                <Button Content="Inapoi"
+                        Click="BtnBackHome_Click"/>
 
-                    <Label Content="Culoare"/>
+            </StackPanel>
+            <!-- CONTINUT -->
+            <Grid Grid.Column="1">
 
-                    <ScrollViewer Height="50">
-                        <WrapPanel>
-                            <RadioButton Content="Negru " x:Name="rbBlack"/>
-                            <RadioButton Content="Rosu " x:Name="rbRed"/>
-                            <RadioButton Content="Albastru " x:Name="rbBlue"/>
-                            <RadioButton Content="Verde " x:Name="rbGreen"/>
-                            <RadioButton Content="Alb " x:Name="rbWhite"/>
-                            <RadioButton Content="Mov " x:Name="rbPurple"/>
-                            <RadioButton Content="Portocaliu " x:Name="rbOrange"/>
-                        </WrapPanel>
-                    </ScrollViewer>
+                <!-- INSTRUMENTE -->
+                <Grid x:Name="GridManagerInstrumente">
 
+                    <ScrollViewer>
 
-                    <CheckBox x:Name="chkDiscount" Content="Aplică discount"/>
+                        <StackPanel Margin="20"
+                                    Width="400">
 
-                    <Button Content="Adauga Instrument" Click="BtnAdaugaInstrument_Click"/>
+                            <TextBlock Text="GESTIUNE INSTRUMENTE"
+                                       FontSize="28"
+                                       Foreground="#00ffff"
+                                       Margin="0,0,0,20"/>
 
-                    <Button Content="Sterge Instrument" Margin="0,10,0,0" Click="BtnDeschideStergere_Click"/>
+                            <Label Content="Nume Instrument"/>
+                            <TextBox x:Name="txtNumeInstrument"/>
 
+                            <Label Content="Brand"/>
+                            <TextBox x:Name="txtBrand"/>
 
-                    <Grid x:Name="panelStergere" Visibility="Collapsed" Margin="20">
-                        <StackPanel Width="300">
+                            <Label Content="Pret"/>
+                            <TextBox x:Name="txtPret"/>
 
-                            <Label Content="Selecteaza instrumentul de sters" FontWeight="Bold"/>
+                            <Label Content="Categorie"/>
+                            <ComboBox x:Name="cmbCategorie"
+                                      Height="30">
 
-                            <ListBox x:Name="listStergere"/>
+                                <ComboBoxItem Content="Guitars"/>
+                                <ComboBoxItem Content="Drums"/>
+                                <ComboBoxItem Content="Keyboards"/>
+                                <ComboBoxItem Content="Mics"/>
 
-                            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                                <Button Content="Confirma stergere" Width="140" Click="BtnConfirmaStergere_Click"/>
+                            </ComboBox>
 
-                                <Button Content="Anuleaza" Width="100" Margin="10,0,0,0" Click="BtnAnuleazaStergere_Click"/>
+                            <Label Content="Culoare"/>
+                            <WrapPanel>
+
+                                <RadioButton x:Name="rbRed"
+                                             Content="Rosu"
+                                             Foreground="White"
+                                             Margin="5"/>
+
+                                <RadioButton x:Name="rbBlue"
+                                             Content="Albastru"
+                                             Foreground="White"
+                                             Margin="5"/>
+
+                                <RadioButton x:Name="rbBlack"
+                                             Content="Negru"
+                                             Foreground="White"
+                                             Margin="5"/>
+                                <RadioButton x:Name="rbGreen"
+                                             Content="Verde"
+                                             Foreground="White"
+                                             Margin="5"/>
+                                <RadioButton x:Name="rbWhite"
+                                             Content="Alb"
+                                             Foreground="White"
+                                             Margin="5"/>
+                                <RadioButton x:Name="rbPurple"
+                                             Content="Mov"
+                                             Foreground="White"
+                                             Margin="5"/>
+                                <RadioButton x:Name="rbOrange"
+                                             Content="Portocaliu"
+                                             Foreground="White"
+                                             Margin="5"/>
+                            </WrapPanel>
+
+                            <CheckBox x:Name="chkDiscount"
+                                      Content="Discount 10%"
+                                      Foreground="White"
+                                      Margin="5"/>
+
+                            <StackPanel Orientation="Horizontal">
+
+                                <Button Content="Adauga Instrument"
+                                        Width="160"
+                                        Click="BtnAdaugaInstrument_Click"/>
+
+                                <Button Content="Sterge Instrument"
+                                        Width="160"
+                                        Click="BtnStergeInstrument_Click"/>
+                                <Button Content="Actualizeaza"
+                                        Width="160"
+                                        Click="BtnActualizeazaInstrument_Click"/>
+
                             </StackPanel>
+                            <Label Content="Cauta Instrument"/>
+
+                            <TextBox x:Name="txtSearchManager"
+                                Height="30"
+                                 TextChanged="txtSearchManager_TextChanged"/>
+
+                            <Label Content="Stoc Instrumente"/>
+
+                            <ListBox x:Name="listInstrumente"
+                                    Height="250"
+                                SelectionChanged="ListInstrumente_SelectionChanged"/>
 
                         </StackPanel>
-                    </Grid>
 
+                    </ScrollViewer>
 
-                    <ListBox x:Name="listInstrumente"
-                             SelectionChanged="ListInstrumente_SelectionChanged"/>
+                </Grid>
 
-                    <Label Content="Rezultate cautare:" Margin="0,10,0,0"/>
-                    <ListBox x:Name="listRezultate"
-                             SelectionChanged="ListRezultate_SelectionChanged"/>
+                <!-- CLIENTI -->
+                <Grid x:Name="GridManagerClienti"
+                      Visibility="Collapsed">
 
+                    <StackPanel Margin="20">
 
-                </StackPanel>
-            </Grid>
+                        <TextBlock Text="CLIENTI INREGISTRATI"
+                                   FontSize="28"
+                                   Foreground="#00ffff"
+                                   Margin="0,0,0,20"/>
 
-            <!-- login -->
-            <Grid x:Name="GridLogin" Visibility="Hidden">
-                <StackPanel Margin="20" Width="300">
+                        <ListBox x:Name="listClienti"
+                                 Height="400"/>
 
-                    <Label Content="Username"/>
-                    <TextBox x:Name="txtLoginUser"/>
+                    </StackPanel>
 
-                    <Label Content="Email"/>
-                    <TextBox x:Name="txtLoginEmail"/>
+                </Grid>
 
-                    <Button Content="Login" Click="BtnLoginUser_Click"/>
+                <!-- COMENZI -->
+                <Grid x:Name="GridManagerComenzi"
+                      Visibility="Collapsed">
 
-                    <Label Content="Clienti logati:"/>
-                    <ListBox x:Name="listLogati"/>
+                    <StackPanel Margin="20">
 
-                </StackPanel>
+                        <TextBlock Text="COMENZI PLASATE"
+                                   FontSize="28"
+                                   Foreground="#00ffff"
+                                   Margin="0,0,0,20"/>
+
+                        <ListBox x:Name="listComenzi"
+                                 Height="300"/>
+
+                        <Button Content="Confirma Comanda"
+                                Width="180"
+                                Click="BtnConfirmaComanda_Click"/>
+
+                    </StackPanel>
+
+                </Grid>
+
             </Grid>
 
         </Grid>
+
+        <!-- CLIENT -->
+        <Grid x:Name="GridClient"
+              Visibility="Collapsed"
+              Background="#0d0d0d">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="70"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- MENIU -->
+            <Border Background="#111111">
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Text="RETRO MUSIC SHOP"
+                   Grid.Column="0"
+                   Foreground="#ff00cc"
+                   FontSize="28"
+                   FontWeight="Bold"
+                   VerticalAlignment="Center"
+                   Margin="20,0"/>
+
+                    <StackPanel Grid.Column="1"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center">
+
+                        <Button Content="Home"
+                    Width="100"
+                    Click="BtnHomeClient_Click"/>
+
+                        <Button Content="Cos"
+                    Width="100"
+                    Click="BtnCos_Click"/>
+
+                        <Button Content="Blog"
+                    Width="100"
+                    Click="BtnBlog_Click"/>
+
+                        <Button Content="Inapoi"
+                    Width="100"
+                    Click="BtnBackHome_Click"/>
+
+                        <TextBox x:Name="txtSearchClient"
+                     Width="200"
+                     Height="30"
+                     Margin="20,0,0,0"
+                     VerticalContentAlignment="Center"/>
+
+                        <Button Content="Search"
+                    Width="100"
+                    Click="BtnSearchClient_Click"/>
+                    </StackPanel>
+
+                </Grid>
+
+            </Border>
+
+            <!-- CONTINUT -->
+            <Grid Grid.Row="1">
+
+                <!-- HOME -->
+                <Grid x:Name="GridClientHome">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="250"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- MENIU -->
+                    <StackPanel Background="#161616">
+
+                        <TextBlock Text="Categorii"
+                                   Foreground="#00ffff"
+                                   FontSize="22"
+                                   Margin="10"/>
+
+                        <Button Content="Chitari"
+                                Click="BtnChitari_Click"/>
+
+                        <Button Content="Tobe"
+                                Click="BtnTobe_Click"/>
+
+                        <Button Content="Clape"
+                                Click="BtnClape_Click"/>
+                    </StackPanel>
+
+                    <!-- PRODUSE -->
+                    <ScrollViewer Grid.Column="1">
+
+                        <WrapPanel x:Name="wrapProduse"
+                                   Margin="20"/>
+
+                    </ScrollViewer>
+
+                </Grid>
+
+                <!-- COS -->
+                <Grid x:Name="GridCos"
+                      Visibility="Collapsed">
+
+                    <StackPanel Margin="20">
+
+                        <TextBlock Text="COSUL TAU"
+                                   FontSize="30"
+                                   Foreground="#00ffff"
+                                   Margin="0,0,0,20"/>
+
+                        <ListBox x:Name="listCos"
+                                 Height="350"/>
+
+                        <Button Content="Plaseaza Comanda"
+                                Width="180"
+                                Click="BtnPlaseazaComanda_Click"/>
+
+                    </StackPanel>
+
+                </Grid>
+
+                <!-- BLOG -->
+                <Grid x:Name="GridBlog"
+                      Visibility="Collapsed">
+
+                    <StackPanel Margin="20">
+
+                        <TextBlock Text="BLOG SI ANUNTURI"
+                                   FontSize="30"
+                                   Foreground="#00ffff"
+                                   Margin="0,0,0,20"/>
+
+                        <TextBox x:Name="txtAnunt"
+                                 Height="80"
+                                 TextWrapping="Wrap"
+                                 AcceptsReturn="True"/>
+
+                        <Button Content="Adauga mesaj"
+                                Width="150"
+                                Click="BtnAdaugaAnunt_Click"/>
+
+                        <ListBox x:Name="listAnunturi"
+                                 Height="300"/>
+
+                    </StackPanel>
+
+                </Grid>
+
+                <!-- PAGINA PRODUS -->
+                <Grid x:Name="GridProductPage"
+                      Visibility="Collapsed"
+                      Background="#111111">
+
+                    <StackPanel Width="400"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center">
+
+                        <TextBlock Text="PAGINA PRODUS"
+                                   FontSize="30"
+                                   Foreground="Cyan"
+                                   HorizontalAlignment="Center"
+                                   Margin="0,0,0,20"/>
+
+                        <TextBlock x:Name="txtProdusNume"
+                                   FontSize="24"
+                                   Foreground="White"/>
+
+                        <TextBlock x:Name="txtProdusBrand"
+                                   FontSize="18"
+                                   Foreground="LightGray"
+                                   Margin="0,10,0,0"/>
+
+                        <TextBlock x:Name="txtProdusCategorie"
+                                   FontSize="18"
+                                   Foreground="LightGray"/>
+
+                        <TextBlock x:Name="txtProdusPret"
+                                   FontSize="22"
+                                   Foreground="Lime"
+                                   Margin="0,10,0,0"/>
+
+                        <TextBlock x:Name="txtProdusDiscount"
+                                   FontSize="18"
+                                   Foreground="Orange"/>
+
+                        <TextBlock x:Name="txtProdusCantitate"
+                                   FontSize="18"
+                                   Foreground="White"/>
+
+                        <TextBlock x:Name="txtProdusDescriere"
+                                   FontSize="16"
+                                   Foreground="White"
+                                   TextWrapping="Wrap"
+                                   Margin="0,20,0,0"/>
+
+                        <Button Content="Adauga in cos"
+                                Height="40"
+                                Margin="0,20,0,0"
+                                Click="BtnAddProductPageToCart_Click"/>
+
+                        <Button Content="Inapoi"
+                                Height="40"
+                                Margin="0,10,0,0"
+                                Click="BtnBackFromProduct_Click"/>
+
+                    </StackPanel>
+                </Grid>
+
+            </Grid>
+
+        </Grid>
+
+        <TextBlock x:Name="txtStatus"
+                   Text=""
+                   FontSize="16"
+                   FontWeight="Bold"
+                   Foreground="Lime"
+                   Background="#222"
+                   Padding="10"
+                   Margin="10"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Bottom"
+                   Visibility="Collapsed"/>
     </Grid>
 </Window>

@@ -33,6 +33,7 @@ namespace AdministrareDate
             }
         }
 
+
         public List<Client> GetClienti()
         {
             List<Client> clienti = new List<Client>();
@@ -117,6 +118,7 @@ namespace AdministrareDate
             }
         }
 
+
         public List<Instrument> GetInstrumente()
         {
             List<Instrument> instrumente = new List<Instrument>();
@@ -187,5 +189,6 @@ namespace AdministrareDate
             if (instrumente.Count == 0) return 1;
             return instrumente.Last().ID + 1;
         }
+
     }
 }
