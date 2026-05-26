@@ -277,8 +277,12 @@
                     VerticalAlignment="Center">
 
                         <Button Content="Home"
-                    Width="100"
-                    Click="BtnHomeClient_Click"/>
+                             Width="100"
+                             Click="BtnHomeClient_Click"/>
+                        
+                        <Button Content="Logare"
+                             Width="100"
+                             Click="BtnLogare_Click"/>
 
                         <Button Content="Cos"
                     Width="100"
@@ -390,6 +394,42 @@
 
                         <ListBox x:Name="listAnunturi"
                                  Height="300"/>
+
+                    </StackPanel>
+
+                </Grid>
+                <!-- LOGARE -->
+                <Grid x:Name="GridLogare"
+      Visibility="Collapsed"
+      Background="#111111">
+
+                    <StackPanel Width="350"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center">
+
+                        <TextBlock Text="LOGARE CLIENT"
+                   FontSize="30"
+                   Foreground="#00ffff"
+                   HorizontalAlignment="Center"
+                   Margin="0,0,0,30"/>
+
+                        <Label Content="Email"/>
+                        <TextBox x:Name="txtLoginEmail"
+                 Height="35"/>
+
+                        <Label Content="Parola"/>
+                        <PasswordBox x:Name="txtLoginParola"
+                     Height="35"
+                     Margin="5"/>
+
+                        <Button Content="Logheaza-te"
+                Margin="5,20,5,5"
+                Click="BtnLogheaza_Click"/>
+
+                        <TextBlock x:Name="txtLogareStatus"
+                   Foreground="Red"
+                   HorizontalAlignment="Center"
+                   Margin="0,10,0,0"/>
 
                     </StackPanel>
 

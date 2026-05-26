@@ -94,7 +94,8 @@ namespace NivelUIWPF
 
             double.TryParse(txtPret.Text, out double pret);
 
-            Instrument_Category categorie = (Instrument_Category)cmbCategorie.SelectedItem;
+            ComboBoxItem itemSelectat = (ComboBoxItem)cmbCategorie.SelectedItem;
+            Enum.TryParse(itemSelectat.Content.ToString(), out Instrument_Category categorie);
 
             CustomOrderColor culoare = CustomOrderColor.Black;
 
@@ -142,7 +143,6 @@ namespace NivelUIWPF
                 return;
 
             string selected = listInstrumente.SelectedItem.ToString();
-
             string nume = selected.Split('-')[0].Trim();
 
             var instrument = adminClienti.CautaInstrumentDupaNume(nume);
@@ -151,16 +151,34 @@ namespace NivelUIWPF
             {
                 produsSelectat = instrument;
 
-                txtProdusNume.Text = instrument.Name;
-                txtProdusBrand.Text = "Brand: " + instrument.Brand;
-                txtProdusCategorie.Text = "Categorie: " + instrument.Category;
-                txtProdusPret.Text = "Pret: " + instrument.Final_Price() + " RON";
-                txtProdusDiscount.Text = "Discount: " + instrument.Discount + "%";
-                txtProdusCantitate.Text = "Stoc: " + instrument.Quantity;
-                txtProdusDescriere.Text = instrument.Description;
+                // populeaza formularul cu datele instrumentului
+                txtNumeInstrument.Text = instrument.Name;
+                txtBrand.Text = instrument.Brand;
+                txtPret.Text = instrument.Price.ToString();
 
-                GridClient.Visibility = Visibility.Collapsed;
-                GridProductPage.Visibility = Visibility.Visible;
+                // seteaza categoria in combobox
+                foreach (ComboBoxItem item in cmbCategorie.Items)
+                {
+                    if (item.Content.ToString() == instrument.Category.ToString())
+                    {
+                        cmbCategorie.SelectedItem = item;
+                        break;
+                    }
+                }
+
+                // seteaza culoarea
+                rbRed.IsChecked = instrument.Color == CustomOrderColor.Red;
+                rbBlue.IsChecked = instrument.Color == CustomOrderColor.Blue;
+                rbBlack.IsChecked = instrument.Color == CustomOrderColor.Black;
+                rbGreen.IsChecked = instrument.Color == CustomOrderColor.Green;
+                rbWhite.IsChecked = instrument.Color == CustomOrderColor.White;
+                rbPurple.IsChecked = instrument.Color == CustomOrderColor.Purple;
+                rbOrange.IsChecked = instrument.Color == CustomOrderColor.Orange;
+
+                // seteaza discount
+                chkDiscount.IsChecked = instrument.Discount > 0;
+
+                AfiseazaMesaj("Instrument selectat: " + instrument.Name, Brushes.Cyan);
             }
         }
         private void txtSearchManager_TextChanged(object sender, TextChangedEventArgs e)
@@ -331,6 +349,7 @@ namespace NivelUIWPF
             GridClientHome.Visibility = Visibility.Visible;
             GridCos.Visibility = Visibility.Collapsed;
             GridBlog.Visibility = Visibility.Collapsed;
+            GridLogare.Visibility = Visibility.Collapsed;
             AfisareProduseClient();
         }
 
@@ -465,28 +484,64 @@ namespace NivelUIWPF
         }
         private void BtnActualizeazaInstrument_Click(object sender, RoutedEventArgs e)
         {
-            if (listInstrumente.SelectedItem == null)
+            if (produsSelectat == null)
             {
                 AfiseazaMesaj("Selecteaza un instrument din lista!", Brushes.Red);
                 return;
             }
 
-            string text = listInstrumente.SelectedItem.ToString();
-            string nume = text.Split('-')[0].Trim();
+            if (string.IsNullOrWhiteSpace(txtNumeInstrument.Text) ||
+                string.IsNullOrWhiteSpace(txtBrand.Text) ||
+                string.IsNullOrWhiteSpace(txtPret.Text))
+            {
+                AfiseazaMesaj("Completeaza toate campurile!", Brushes.Red);
+                return;
+            }
 
-            var instrument = adminClienti.CautaInstrumentDupaNume(nume);
+            if (!double.TryParse(txtPret.Text, out double pretNou))
+            {
+                AfiseazaMesaj("Pretul trebuie sa fie un numar!", Brushes.Red);
+                return;
+            }
 
-            if (instrument == null) return;
+            // sterge instrumentul vechi
+            adminClienti.StergeInstrumentDupaNume(produsSelectat.Name);
 
-            instrument.Name = txtNumeInstrument.Text;
-            instrument.Brand = txtBrand.Text;
-            double.TryParse(txtPret.Text, out double pret);
-            instrument.Price = pret;
+            // construieste instrumentul nou cu datele din formular
+            CustomOrderColor culoare = CustomOrderColor.Black;
+            if (rbRed.IsChecked == true) culoare = CustomOrderColor.Red;
+            else if (rbBlue.IsChecked == true) culoare = CustomOrderColor.Blue;
+            else if (rbGreen.IsChecked == true) culoare = CustomOrderColor.Green;
+            else if (rbWhite.IsChecked == true) culoare = CustomOrderColor.White;
+            else if (rbPurple.IsChecked == true) culoare = CustomOrderColor.Purple;
+            else if (rbOrange.IsChecked == true) culoare = CustomOrderColor.Orange;
+
+            ComboBoxItem itemSelectat = (ComboBoxItem)cmbCategorie.SelectedItem;
+            Enum.TryParse(itemSelectat.Content.ToString(), out Instrument_Category categorie);
+
+            double discount = chkDiscount.IsChecked == true ? 10 : 0;
+
+            Instrument instrumentActualizat = new Instrument(
+                produsSelectat.ID,
+                txtNumeInstrument.Text,
+                txtBrand.Text,
+                categorie,
+                pretNou,
+                produsSelectat.Description,
+                produsSelectat.Quantity,
+                discount,
+                culoare
+            );
+
+            // adauga instrumentul actualizat
+            adminClienti.AdaugaInstrument(instrumentActualizat);
+
+            produsSelectat = null;
 
             AfisareInstrumente();
             AfisareProduseClient();
 
-            AfiseazaMesaj("Instrument actualizat!", Brushes.Lime);
+            AfiseazaMesaj("Instrument actualizat cu succes!", Brushes.Lime);
         }
 
         private void BtnBackFromProduct_Click(object sender, RoutedEventArgs e)
@@ -502,6 +557,48 @@ namespace NivelUIWPF
             listCos.Items.Add(txtProdusNume.Text);
 
             AfiseazaMesaj("Produs adaugat in cos!", Brushes.Lime);
+        }
+        private void BtnLogare_Click(object sender, RoutedEventArgs e)
+        {
+            AscundeMesaj();
+            GridClientHome.Visibility = Visibility.Collapsed;
+            GridCos.Visibility = Visibility.Collapsed;
+            GridBlog.Visibility = Visibility.Collapsed;
+            GridLogare.Visibility = Visibility.Visible;
+            txtLogareStatus.Text = "";
+        }
+
+        private void BtnLogheaza_Click(object sender, RoutedEventArgs e)
+        {
+            string email = txtLoginEmail.Text.Trim();
+            string parola = txtLoginParola.Password.Trim();
+
+            if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(parola))
+            {
+                txtLogareStatus.Foreground = Brushes.Red;
+                txtLogareStatus.Text = "Completeaza toate campurile!";
+                return;
+            }
+
+            var client = adminClienti.GetClienti()
+                .FirstOrDefault(c => c.Email.ToLower() == email.ToLower());
+
+            if (client == null)
+            {
+                txtLogareStatus.Foreground = Brushes.Red;
+                txtLogareStatus.Text = "Email sau parola incorecte!";
+                return;
+            }
+
+            // logare reusita
+            txtLogareStatus.Foreground = Brushes.Lime;
+            txtLogareStatus.Text = "Bine ai venit, " + client.Name + "!";
+
+            AfiseazaMesaj("Logat ca: " + client.Name, Brushes.Lime);
+
+            GridLogare.Visibility = Visibility.Collapsed;
+            GridClientHome.Visibility = Visibility.Visible;
+            AfisareProduseClient();
         }
 
     }
